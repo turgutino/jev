@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": "results/q/4b_i1ep",
+  "label": "4B intent-1ep paperA",
+  "trained": true
+}

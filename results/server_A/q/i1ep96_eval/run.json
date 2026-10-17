@@ -1,0 +1,5 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "adapter": "results/chain3/intent1ep/checkpoint-last",
+  "label": "0.6B intent-1ep ckpt~3100 paperA"
+}

@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "adapter": "/root/autodl-tmp/turgutino/projects/jev/run_20261015_161348/results/speedtest2",
+  "label": "speedtest2",
+  "trained": true
+}

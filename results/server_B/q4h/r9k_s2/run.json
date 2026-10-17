@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": "results/q4h/r9k_s2",
+  "label": "4B 4-bit reason-9k (opts<=20) paperA seed2",
+  "trained": true
+}

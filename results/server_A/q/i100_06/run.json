@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "adapter": "results/q/i100_06",
+  "label": "0.6B intent-100 paperA",
+  "trained": true
+}

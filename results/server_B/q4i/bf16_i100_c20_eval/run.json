@@ -1,0 +1,5 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": "results/q4i/bf16_i100_c20",
+  "label": "4B bf16 intent-100 (opts<=20) paperA"
+}

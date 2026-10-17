@@ -1,0 +1,240 @@
+[
+ {
+  "id": "c1_i300b",
+  "runner": "jf_q4b.py",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--mix",
+   "intent",
+   "--max-examples",
+   "9000",
+   "--batch-size",
+   "30",
+   "--label",
+   "4B 4-bit intent-300 (opts<=20) paperA, rerun",
+   "--out",
+   "results/q4/i300b"
+  ],
+  "marker": "results/q4/i300b/adapter_model.safetensors",
+  "need_mib": 9500,
+  "env": {
+   "Q4": 1,
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "MAX_OPTS": 20,
+   "CAP_GIB": 20
+  }
+ },
+ {
+  "id": "c2_i300b_jevbench",
+  "runner": "jf_q4b.py",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q4/i300b",
+   "--label",
+   "4B 4-bit intent-300 paperA",
+   "--out",
+   "results/q4g/i300b_eval"
+  ],
+  "marker": "results/q4g/i300b_eval/jevbench/summary.json",
+  "need_mib": 9500,
+  "env": {
+   "Q4": 1,
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "CAP_GIB": 20
+  },
+  "requires": "results/q4/i300b/adapter_model.safetensors"
+ },
+ {
+  "id": "d3_bf16_base_jevbench",
+  "runner": "jf_q4b.py",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--label",
+   "4B bf16 base paperA (cache forced)",
+   "--out",
+   "results/q4g/bf16_base"
+  ],
+  "marker": "results/q4g/bf16_base/jevbench/summary.json",
+  "need_mib": 9500,
+  "env": {
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "CAP_GIB": 22
+  }
+ },
+ {
+  "id": "d1_bf16_i100",
+  "runner": "jf_q4b.py",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--mix",
+   "intent",
+   "--max-examples",
+   "3000",
+   "--batch-size",
+   "30",
+   "--label",
+   "4B bf16 intent-100 (no option cap) paperA",
+   "--out",
+   "results/q4g/bf16_i100"
+  ],
+  "marker": "results/q4g/bf16_i100/adapter_model.safetensors",
+  "need_mib": 9500,
+  "env": {
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "CAP_GIB": 22
+  }
+ },
+ {
+  "id": "d2_bf16_i100_jevbench",
+  "runner": "jf_q4b.py",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q4g/bf16_i100",
+   "--label",
+   "4B bf16 intent-100 paperA",
+   "--out",
+   "results/q4g/bf16_i100_eval"
+  ],
+  "marker": "results/q4g/bf16_i100_eval/jevbench/summary.json",
+  "need_mib": 9500,
+  "env": {
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "CAP_GIB": 22
+  },
+  "requires": "results/q4g/bf16_i100/adapter_model.safetensors"
+ },
+ {
+  "id": "b1_base",
+  "runner": "jf_q4b.py",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--label",
+   "4B 4-bit base paperA (cache forced)",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q4g/b77_base"
+  ],
+  "marker": "results/q4g/b77_base/eval/summary.json",
+  "need_mib": 9500,
+  "env": {
+   "Q4": 1,
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "CAP_GIB": 20
+  }
+ },
+ {
+  "id": "b2_i100",
+  "runner": "jf_q4b.py",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q4/i100",
+   "--label",
+   "4B 4-bit intent-100 paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q4g/b77_i100"
+  ],
+  "marker": "results/q4g/b77_i100/eval/summary.json",
+  "need_mib": 9500,
+  "env": {
+   "Q4": 1,
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "CAP_GIB": 20
+  },
+  "requires": "results/q4/i100/adapter_model.safetensors"
+ },
+ {
+  "id": "b3_r9k",
+  "runner": "jf_q4b.py",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q4/r9k",
+   "--label",
+   "4B 4-bit reason-9k paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q4g/b77_r9k"
+  ],
+  "marker": "results/q4g/b77_r9k/eval/summary.json",
+  "need_mib": 9500,
+  "env": {
+   "Q4": 1,
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "CAP_GIB": 20
+  },
+  "requires": "results/q4/r9k/adapter_model.safetensors"
+ },
+ {
+  "id": "b4_i300b",
+  "runner": "jf_q4b.py",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q4/i300b",
+   "--label",
+   "4B 4-bit intent-300 paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q4g/b77_i300b"
+  ],
+  "marker": "results/q4g/b77_i300b/eval/summary.json",
+  "need_mib": 9500,
+  "env": {
+   "Q4": 1,
+   "PROMPT_VARIANT": "paperA",
+   "FORCE_MODE": "cache",
+   "CAP_GIB": 20
+  },
+  "requires": "results/q4/i300b/adapter_model.safetensors"
+ }
+]

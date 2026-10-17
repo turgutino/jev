@@ -1,0 +1,5 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": null,
+  "label": "4B bf16 base paperA (cache forced)"
+}

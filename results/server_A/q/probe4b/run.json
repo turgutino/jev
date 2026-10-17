@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": "results/q/probe4b",
+  "label": "probe4b",
+  "trained": true
+}

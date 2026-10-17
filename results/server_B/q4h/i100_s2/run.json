@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": "results/q4h/i100_s2",
+  "label": "4B 4-bit intent-100 (opts<=20) paperA seed2",
+  "trained": true
+}

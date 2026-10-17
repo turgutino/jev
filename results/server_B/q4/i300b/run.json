@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": "results/q4/i300b",
+  "label": "4B 4-bit intent-300 (opts<=20) paperA, rerun",
+  "trained": true
+}

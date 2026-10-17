@@ -1,0 +1,5 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": "results/q4/i100",
+  "label": "4B 4-bit intent-100 paperA"
+}

@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "adapter": "/root/autodl-tmp/turgutino/projects/jev/run_20261015_161348/results/chain3/intent1ep",
+  "label": "Qwen/Qwen3-0.6B LoRA intent-1ep paperA",
+  "trained": true
+}

@@ -1,0 +1,5 @@
+{
+  "model": "Qwen/Qwen3.5-4B",
+  "adapter": "results/q4/r9k",
+  "label": "4B 4-bit reason-9k paperA"
+}

@@ -1,0 +1,5 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "adapter": "/root/autodl-tmp/turgutino/projects/jev/run_20261015_161348/results/chain3/intent1ep/checkpoint-last",
+  "label": "Qwen/Qwen3-0.6B intent-1ep(step~3100/3228) paperA"
+}

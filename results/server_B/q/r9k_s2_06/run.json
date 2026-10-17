@@ -1,0 +1,6 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "adapter": "results/q/r9k_s2_06",
+  "label": "0.6B reason-9k s2 paperA",
+  "trained": true
+}

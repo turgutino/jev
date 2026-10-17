@@ -1,0 +1,509 @@
+[
+ {
+  "id": "q10_4b_probe",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--mix",
+   "intent",
+   "--max-examples",
+   "64",
+   "--batch-size",
+   "8",
+   "--max-steps",
+   "2",
+   "--decontaminate",
+   "none",
+   "--save-every",
+   "0",
+   "--out",
+   "results/q/probe4b"
+  ],
+  "marker": "results/q/probe4b/adapter_model.safetensors",
+  "need_mib": 22000,
+  "idle_only": true,
+  "pause_queue_after": true
+ },
+ {
+  "id": "q11_4b_base_default_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--label",
+   "4B base jevforge-default prompt",
+   "--out",
+   "results/q/4b_base_default"
+  ],
+  "marker": "results/q/4b_base_default/jevbench/summary.json",
+  "need_mib": 11000,
+  "idle_only": true,
+  "env": {
+   "PROMPT_VARIANT": "default"
+  }
+ },
+ {
+  "id": "q11_4b_base_default_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--label",
+   "4B base jevforge-default prompt",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/4b_base_default"
+  ],
+  "marker": "results/q/4b_base_default/eval/summary.json",
+  "need_mib": 11000,
+  "idle_only": true,
+  "env": {
+   "PROMPT_VARIANT": "default"
+  }
+ },
+ {
+  "id": "q12_4b_base_paperA_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--label",
+   "4B base paperA",
+   "--out",
+   "results/q/4b_base_paperA"
+  ],
+  "marker": "results/q/4b_base_paperA/jevbench/summary.json",
+  "need_mib": 11000,
+  "idle_only": true
+ },
+ {
+  "id": "q12_4b_base_paperA_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--label",
+   "4B base paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/4b_base_paperA"
+  ],
+  "marker": "results/q/4b_base_paperA/eval/summary.json",
+  "need_mib": 11000,
+  "idle_only": true
+ },
+ {
+  "id": "q13_4b_i100",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--mix",
+   "intent",
+   "--max-examples",
+   "3000",
+   "--batch-size",
+   "30",
+   "--label",
+   "4B intent-100 paperA",
+   "--out",
+   "results/q/4b_i100"
+  ],
+  "marker": "results/q/4b_i100/adapter_model.safetensors",
+  "need_mib": 16000,
+  "idle_only": true
+ },
+ {
+  "id": "q14_4b_i100_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q/4b_i100",
+   "--label",
+   "4B intent-100 paperA",
+   "--out",
+   "results/q/4b_i100_eval"
+  ],
+  "marker": "results/q/4b_i100_eval/jevbench/summary.json",
+  "need_mib": 11000,
+  "idle_only": true
+ },
+ {
+  "id": "q14_4b_i100_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q/4b_i100",
+   "--label",
+   "4B intent-100 paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/4b_i100_eval"
+  ],
+  "marker": "results/q/4b_i100_eval/eval/summary.json",
+  "need_mib": 11000,
+  "idle_only": true
+ },
+ {
+  "id": "q15_4b_r9k",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--mix",
+   "clinc150,massive,bitext,reclor,logiqa2,cosmos_qa,piqa,anli,proofwriter",
+   "--max-examples",
+   "9000",
+   "--label",
+   "4B reason-9k paperA",
+   "--out",
+   "results/q/4b_r9k"
+  ],
+  "marker": "results/q/4b_r9k/adapter_model.safetensors",
+  "need_mib": 16000,
+  "idle_only": true
+ },
+ {
+  "id": "q16_4b_r9k_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q/4b_r9k",
+   "--label",
+   "4B reason-9k paperA",
+   "--out",
+   "results/q/4b_r9k_eval"
+  ],
+  "marker": "results/q/4b_r9k_eval/jevbench/summary.json",
+  "need_mib": 11000,
+  "idle_only": true
+ },
+ {
+  "id": "q16_4b_r9k_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q/4b_r9k",
+   "--label",
+   "4B reason-9k paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/4b_r9k_eval"
+  ],
+  "marker": "results/q/4b_r9k_eval/eval/summary.json",
+  "need_mib": 11000,
+  "idle_only": true
+ },
+ {
+  "id": "q20_i1ep_full_06",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--mix",
+   "intent",
+   "--label",
+   "0.6B intent-1ep full paperA",
+   "--out",
+   "results/q/i1ep_full_06"
+  ],
+  "marker": "results/q/i1ep_full_06/adapter_model.safetensors",
+  "need_mib": 9000
+ },
+ {
+  "id": "q21_i1ep_full_06_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--adapter",
+   "results/q/i1ep_full_06",
+   "--label",
+   "0.6B intent-1ep full paperA",
+   "--out",
+   "results/q/i1ep_full_06_eval"
+  ],
+  "marker": "results/q/i1ep_full_06_eval/jevbench/summary.json",
+  "need_mib": 3500
+ },
+ {
+  "id": "q21_i1ep_full_06_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--adapter",
+   "results/q/i1ep_full_06",
+   "--label",
+   "0.6B intent-1ep full paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/i1ep_full_06_eval"
+  ],
+  "marker": "results/q/i1ep_full_06_eval/eval/summary.json",
+  "need_mib": 6000
+ },
+ {
+  "id": "q22_r9k_s2_06",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--mix",
+   "clinc150,massive,bitext,reclor,logiqa2,cosmos_qa,piqa,anli,proofwriter",
+   "--max-examples",
+   "9000",
+   "--label",
+   "0.6B reason-9k s2 paperA",
+   "--out",
+   "results/q/r9k_s2_06",
+   "--seed",
+   "20261001"
+  ],
+  "marker": "results/q/r9k_s2_06/adapter_model.safetensors",
+  "need_mib": 9000
+ },
+ {
+  "id": "q23_r9k_s2_06_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--adapter",
+   "results/q/r9k_s2_06",
+   "--label",
+   "0.6B reason-9k s2 paperA",
+   "--out",
+   "results/q/r9k_s2_06_eval"
+  ],
+  "marker": "results/q/r9k_s2_06_eval/jevbench/summary.json",
+  "need_mib": 3500
+ },
+ {
+  "id": "q23_r9k_s2_06_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--adapter",
+   "results/q/r9k_s2_06",
+   "--label",
+   "0.6B reason-9k s2 paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/r9k_s2_06_eval"
+  ],
+  "marker": "results/q/r9k_s2_06_eval/eval/summary.json",
+  "need_mib": 6000
+ },
+ {
+  "id": "q22_r9k_s3_06",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--mix",
+   "clinc150,massive,bitext,reclor,logiqa2,cosmos_qa,piqa,anli,proofwriter",
+   "--max-examples",
+   "9000",
+   "--label",
+   "0.6B reason-9k s3 paperA",
+   "--out",
+   "results/q/r9k_s3_06",
+   "--seed",
+   "20261002"
+  ],
+  "marker": "results/q/r9k_s3_06/adapter_model.safetensors",
+  "need_mib": 9000
+ },
+ {
+  "id": "q23_r9k_s3_06_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--adapter",
+   "results/q/r9k_s3_06",
+   "--label",
+   "0.6B reason-9k s3 paperA",
+   "--out",
+   "results/q/r9k_s3_06_eval"
+  ],
+  "marker": "results/q/r9k_s3_06_eval/jevbench/summary.json",
+  "need_mib": 3500
+ },
+ {
+  "id": "q23_r9k_s3_06_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--adapter",
+   "results/q/r9k_s3_06",
+   "--label",
+   "0.6B reason-9k s3 paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/r9k_s3_06_eval"
+  ],
+  "marker": "results/q/r9k_s3_06_eval/eval/summary.json",
+  "need_mib": 6000
+ },
+ {
+  "id": "q24_i1ep_s2_06",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--mix",
+   "intent",
+   "--label",
+   "0.6B intent-1ep s2 paperA",
+   "--out",
+   "results/q/i1ep_s2_06",
+   "--seed",
+   "20261001"
+  ],
+  "marker": "results/q/i1ep_s2_06/adapter_model.safetensors",
+  "need_mib": 9000
+ },
+ {
+  "id": "q25_i1ep_s2_06_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--adapter",
+   "results/q/i1ep_s2_06",
+   "--label",
+   "0.6B intent-1ep s2 paperA",
+   "--out",
+   "results/q/i1ep_s2_06_eval"
+  ],
+  "marker": "results/q/i1ep_s2_06_eval/jevbench/summary.json",
+  "need_mib": 3500
+ },
+ {
+  "id": "q25_i1ep_s2_06_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3-0.6B",
+   "--adapter",
+   "results/q/i1ep_s2_06",
+   "--label",
+   "0.6B intent-1ep s2 paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/i1ep_s2_06_eval"
+  ],
+  "marker": "results/q/i1ep_s2_06_eval/eval/summary.json",
+  "need_mib": 6000
+ },
+ {
+  "id": "q40_4b_i1ep",
+  "args": [
+   "train",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--mix",
+   "intent",
+   "--label",
+   "4B intent-1ep paperA",
+   "--out",
+   "results/q/4b_i1ep"
+  ],
+  "marker": "results/q/4b_i1ep/adapter_model.safetensors",
+  "need_mib": 16000,
+  "idle_only": true
+ },
+ {
+  "id": "q41_4b_i1ep_jevbench",
+  "args": [
+   "jevbench",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q/4b_i1ep",
+   "--label",
+   "4B intent-1ep paperA",
+   "--out",
+   "results/q/4b_i1ep_eval"
+  ],
+  "marker": "results/q/4b_i1ep_eval/jevbench/summary.json",
+  "need_mib": 11000,
+  "idle_only": true
+ },
+ {
+  "id": "q41_4b_i1ep_b77",
+  "args": [
+   "eval",
+   "--model",
+   "Qwen/Qwen3.5-4B",
+   "--adapter",
+   "results/q/4b_i1ep",
+   "--label",
+   "4B intent-1ep paperA",
+   "--tasks",
+   "banking77",
+   "--limit",
+   "1000",
+   "--readouts",
+   "jev",
+   "--out",
+   "results/q/4b_i1ep_eval"
+  ],
+  "marker": "results/q/4b_i1ep_eval/eval/summary.json",
+  "need_mib": 11000,
+  "idle_only": true
+ }
+]
