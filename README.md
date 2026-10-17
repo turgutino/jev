@@ -22,7 +22,7 @@ Start with **[REPORT.md](REPORT.md)** (results, deviations, limitations). Everyt
 Needs Python 3 with `numpy` only.
 
 ```bash
-python analysis/analyze_06b.py out_06b.md     # ~10 s
+python analysis/analyze_06b.py out_06b.md     # ~1 min
 python analysis/analyze_4b_full.py out_4b.md  # ~2 min (bootstrap + cross-validation)
 diff out_4b.md analysis/results_4b.md         # identical
 ```

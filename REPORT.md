@@ -27,6 +27,7 @@ What we found:
 4. **Our 4B baseline only matches the paper with a different prompt than the one we trained with** [V]. With jevforge's default prompt the bf16 baseline is
    79.2 % / ECE 0.035 / 40 "yes" (paper 81.4 % / .057 / 36). With the paper-literal prompt ("paperA", used for all our 4B fine-tuning) it is 72.7 % / 0.051 / 51 "yes".
    For 0.6B it is the other way round. Our 4B fine-tuning results are therefore **not** a faithful replication of the paper's 4B setting (see §6 and §8).
+   Re-runs of the 4B experiments with the default prompt (bf16, ≤ 20 options) were started on 2026-10-17 and are **not** part of this version of the report.
 5. **Post-hoc temperature scaling is a cheap fix** [V]: with T fitted on Banking77 and applied to JevBench, ECE falls 0.157 → 0.097 (Intent-300),
    0.106 → 0.090 (Intent-100), 0.061 → 0.048 (Reason-9k); the fitted T grows with intent training (1.14 base, 1.35, 1.59). Only 231 test items, so indicative.
 
@@ -43,7 +44,8 @@ What we found:
 | 0.6B Reason-9k | 55.0 | .118 | 41 | 60.4 |
 
 Hypotheses and decision rules were written down **before** the first training run (`docs/REPRO_PLAN_preregistration.md`).
-JevBench has only 231 items; the paper's own bootstrap sd is about 3 accuracy points, so accuracy differences below ~3 points are noise.
+JevBench has only 231 items. A related paper (Geuter et al., "Releasing the Inner Jev", arXiv 2610.17205) states that with 231 items one system's "Capability" score has a bootstrap standard deviation of about 3 points
+(their metric, not exactly our accuracy; read from the paper text [U]). Our own paired bootstrap intervals for accuracy differences are of a similar size (about ±3 to ±5 points), so accuracy differences below ~3 points should be treated as noise.
 
 ## 3. Setup
 
@@ -59,7 +61,7 @@ JevBench has only 231 items; the paper's own bootstrap sd is about 3 accuracy po
   (77 options; `--limit 1000`). ECE with 10 equal-width bins (the harness definition; our recomputation equals the harness `summary.json` for every run).
   Paired comparison on the same items: exact sign test on won/lost items; 95 % bootstrap intervals (4000 resamples) for accuracy and ECE differences.
   "Yes" bias = number of predicted "yes" on the 74 binary items (our definition; the paper's exact definition is not known to us [U]).
-* **Hardware:** one 24 GB GPU (23.5 GiB usable) per run, sometimes shared with our other jobs. All runs 2026-10-15 … 2026-10-17.
+* **Hardware:** one 24 GB GPU (23.5 GiB usable) per run; sometimes shared with our other jobs (server B) or with other users' jobs (server A). All runs 2026-10-15 … 2026-10-17.
 
 ## 4. Baseline check (is our pipeline comparable to the paper?)
 
@@ -71,8 +73,11 @@ JevBench has only 231 items; the paper's own bootstrap sd is about 3 accuracy po
 | 4B bf16, jevforge default | 79.2 | .035 | 40 | 70.5 / .065 | |
 | 4B 4-bit, paperA | 69.7 | .109 | 55 | 66.3 / .064 | |
 
-[V] Pre-registered tolerance for "baseline reproduced": |acc − paper| ≤ 3 points and |ECE − paper| ≤ 0.03. It is met by 0.6B+paperA (accuracy and ECE)
-and by 4B+default (79.2 vs 81.4; .035 vs .057). It is **not** met by 4B+paperA (−8.7 points) nor by the "yes" counts of 0.6B (61 vs 34).
+The two default-prompt baselines were run before we forced the scoring mode to "cache" for all later runs. For paperA the 4B baseline is 72.7 / .0524 without and 72.7 / .0512 with forced "cache" mode [V], so the mode makes no visible difference there.
+
+[V] Pre-registered tolerance for "baseline reproduced" (it covers accuracy and ECE only): |acc − paper| ≤ 3 points and |ECE − paper| ≤ 0.03. It is met by 0.6B+paperA (accuracy and ECE)
+and by 4B+default (79.2 vs 81.4; .035 vs .057). It is **not** met by 4B+paperA (−8.7 points). Separately, the "yes" counts of our baselines (0.6B: 61, 4B+paperA: 51) are far above the paper's (34, 36); only 4B+default (40) is close.
+The pre-registration said that a failed baseline check must be debugged **before** any training; for 4B we trained with paperA anyway and noticed the consequence only afterwards (§8, item 2).
 [I] The best prompt differs per model, and the exact JevBench prompt of the paper is not known to us (the paper's template cannot contain the item-specific question as drawn).
 All fine-tuning below uses the paperA prompt for training and evaluation. The 4B baseline under paperA is lower than the paper's, so absolute 4B numbers should not be compared with the paper's.
 
@@ -137,18 +142,30 @@ predicted catch-alls 7 → 8 / 6 / 6 / 6 / 7 — **no suppression of "none of th
 | claim | 0.6B | 4B |
 |---|---|---|
 | in-domain accuracy up | yes (+28…+40, p < .001) [V] | yes (+4.3…+5.0, p < .001) [V] |
-| JevBench accuracy down | no (−1…−3, n.s.) [V] | no (0…+2, n.s.) [V] |
+| JevBench accuracy down (Intent runs) | no (−1…−3, n.s.) [V] | no (0…+2, n.s.) [V] |
 | ECE up | no, down (as the paper's 0.6B) [V] | Banking77: yes, strongly; JevBench: only Intent-300 (+0.048); Intent-100 n.s. [V] |
 | more confident wrong answers | n/a | Intent-300: 10 % → 30 % of errors with conf ≥ .9; Banking77 10 % → 21–37 % [V] |
 | "yes" bias up | yes (61 → 64–68) [V] | Intent-300 only (55 → 62) [V] |
 | catch-all avoided | mass 0.144 → 0.089–0.111, counts unchanged [V] | not seen [V] |
 | balanced data helps | yes, 3/3 seeds [V] | one seed yes, one seed no [V] |
 
+### Verdicts against the pre-registered hypotheses (`docs/REPRO_PLAN_preregistration.md`)
+
+| hypothesis | verdict | evidence |
+|---|---|---|
+| H0: our baseline reproduces the paper's (\|Δacc\| ≤ 3 points, \|ΔECE\| ≤ 0.03) | 0.6B+paperA **yes**; 4B+default prompt **yes**; 4B+paperA **no** | §4 |
+| H1 (4B): Intent training lowers accuracy ≥ 3 points, raises ECE ≥ 0.03, raises "yes" | **not reproduced** for Intent-100 (accuracy +1…+2, ECE ≈ 0); **partly** for Intent-300 (ECE +0.048, "yes" 55 → 62, but accuracy unchanged, so the rule is not met); 4B Intent-1ep was not run | §6 |
+| H2 (0.6B): Intent raises "yes" but does not raise ECE | **confirmed** | §5 |
+| H3: Reason-9k restores accuracy and "yes" stays above baseline | accuracy restored **yes** (0.6B +0…+4.3; 4B +2.6 / +5.2); "yes" above baseline **no** (0.6B 46 vs 61; 4B 55–56 vs 55) → **partly** | §5, §6 |
+| H4: shipped temperatures of another system (Laya) are not task-appropriate | not part of this report (separate observation) | – |
+
+Improvement items of the plan: (1) post-hoc temperature scaling — done (§7); (2) balanced data — done; (3) the "known-item label smoothing" idea — not tried.
+
 ## 7. Failure analysis and improvement attempts
 
 **Where the model fails (4B, JevBench)** [V]: the typical confident error is a "yes" on a binary item (fact, judge_hard, adequacy; e.g. easy-fact-07, hard-sol-b-judge_hard-02/-08 are among the
 five most confident errors of every tuned run). `temporal_numeric` is at 13–40 % accuracy for every model. After tuning, the `fact` family gets worse (0.67 → 0.50–0.58, only 12 items) while
-`intent`/`extraction`/`routing` items improve slightly. On Banking77 the same confusable intent pairs persist (gold index → predicted index 38→21, 43→38 appear in every run), while the share of wrong answers
+`intent`/`extraction`/`routing` items improve slightly (4-bit runs). On Banking77 the same confusable intent pairs persist (gold index → predicted index 38→21, 43→38 appear in every run), while the share of wrong answers
 made with ≥ 0.9 confidence rises with intent training. Full per-family tables and the lists of most confident errors: `analysis/results_4b.md`.
 
 **Improvements tried.** (a) *Balanced data* (Reason-9k): see §5/§6 — robust at 0.6B, not robust at 4B/JevBench. (b) *Post-hoc temperature scaling* (our own objective: cross-entropy of "top answer is correct" after p → p^(1/T)):
@@ -167,13 +184,15 @@ The untested idea of a label-smoothing term on already-known training items (lis
 ## 8. Deviations from the paper and limitations (please read)
 
 1. **jevforge instead of the authors' code**; not numerically validated; JevBench version pinned by jevforge (1bcc55e) may differ from the paper's [U].
-2. **Prompt.** All fine-tuning used the paper-literal prompt (paperA, State/Options/Select one option…). For 4B the jevforge default prompt reproduces the paper's baseline better (§4) but **no 4B model was fine-tuned or evaluated after fine-tuning with it** (not done).
+2. **Prompt.** All fine-tuning used the paper-literal prompt (paperA, State/Options/Select one option…). For 4B the jevforge default prompt reproduces the paper's baseline better (§4) but **no 4B model was fine-tuned or evaluated after fine-tuning with it** in this version (re-runs were started on 2026-10-17, results pending).
 3. **4B fine-tuning is not paper-faithful:** nf4 4-bit base weights, ≤ 20 options per training question (gold + random others, seeded), Reason-9k with `--max-len 450` (drops longer examples; count not recorded), scoring mode forced to "cache", flash-linear-attention kernels installed.
    The paper-faithful bf16 run without the option cap ran out of memory **three times even alone on the 24 GB GPU** [V]; the one bf16 run we have (Intent-100) uses the ≤ 20-option cap.
 4. **Not done:** 4B Intent-1ep (full epoch; the bf16 attempt failed and was not retried in 4-bit); 4B Reason-9k in bf16; bf16 Banking77 after tuning; any 4B Banking77 repeat seed; the "known-item label smoothing" idea; LoRA ensembles.
 5. **Seeds:** 4B has two seeds only for 4-bit Intent-100 and Reason-9k (seed 2 = 20260923); 0.6B has Reason-9k × 3 and Intent-1ep × 2 (seeds 20260922 / 20261001 / 20261002) plus one early Intent-1ep run that was evaluated from a checkpoint at about 96 % of training. All other configurations are single-seed ("indicative").
-6. **Multiple comparisons:** about 30 paired tests are reported without correction; use the CIs as descriptive. 231 JevBench items → the paper's own sd of ~3 accuracy points applies.
+6. **Multiple comparisons:** about 30 paired tests are reported without correction; use the CIs as descriptive. With only 231 JevBench items, accuracy differences below ~3 points are noise (§2).
 7. **"Yes" definition** and **Banking77 sample** (1000 questions) are ours; baseline "yes" counts differ from the paper (§4).
+7b. **ECE bins:** the pre-registration said 15 bins; we report the 10-bin version (the harness definition, equal to the harness `summary.json`). Metrics listed in the plan but **not** computed here: bootstrap CI of the ECE of a single run, accuracy on the 37 long items, confidence histograms, our own 7-dataset calibration suite.
+7c. **Plan rule not followed:** see §4 — we fine-tuned 4B with a prompt for which the baseline check had failed.
 8. **Shared GPU:** some runs shared the GPU with other jobs of ours; several jobs failed with out-of-memory and were re-run unchanged or with a documented change (4B Reason-9k: cap 9 GiB + `--max-len 450`; 4B Intent-300: re-run after a crash at step 170/300). Numerics are not affected by sharing, but all re-runs are listed in `code/queues/`.
 9. The temperature-scaling objective and the CV protocol are ours; they are not taken from the paper.
 

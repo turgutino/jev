@@ -1,5 +1,8 @@
 # Reproduction plan (written BEFORE any training run, 2026-10-15) - "intent trap" of LLM-as-Jev (arXiv 2610.02076 v3)
 
+> Note for readers of this repository: this is the plan as written on 2026-10-15, before the GPU training runs (including the notes appended that day); only this note was added for the repository. It mentions files of a related project
+> (`obs/`, `research/txt/`, the "Laya" observation H4) that are **not** part of this repository. Outcomes against these hypotheses are in `REPORT.md`, section 6.
+
 Purpose of this file: fix hypotheses, metrics and decision rules in advance so results cannot be re-interpreted after the fact.
 Anything not listed here and done later must be logged under "Deviations" with a reason.
 
